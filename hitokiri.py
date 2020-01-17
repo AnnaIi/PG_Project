@@ -63,18 +63,18 @@ class WeapontSprite(pygame.sprite.Sprite):
 
 class Hitokiri(BaseUnit):
     zomby_kill = 0  # счетчик зомби
-    life_kill = 0   # счетчик потерянных жизней
+    life_kill = 0  # счетчик потерянных жизней
 
     def create_actions(self):
         self.sleep_action = HitokiriSleep(self)
         self.move_action = HitokiriMove(self)
         self.sword_action = HitokiriSword(self)
-        self.start_action = self.sleep_action   # начальное действие
-        self.sword = None   # спрайт меча
+        self.start_action = self.sleep_action  # начальное действие
+        self.sword = None  # спрайт меча
 
     def update(self):
         if self.rect.x > WIDTH - 100 and self.direction == 1 or self.rect.x < 100 and self.direction == -1:
-            self.horisontal_move = False    # хитокири не может уйти за границы дисплея
+            self.horisontal_move = False  # хитокири не может уйти за границы дисплея
         if self.action_move:
             if not self.sword:
                 self.sword = WeapontSprite(self.weapont_sprites, self)
