@@ -54,7 +54,7 @@ class Zombie(BaseUnit):
             self.kill()
         # усли зомби пересёкся со спрайтом хитокири
         if pygame.sprite.spritecollideany(self, self.hitokiri_sprites):
-            self.hitokiri.life_kill += 1
+            self.hitokiri.life -= 1
             self.kill()
         # если зомби вышел за границы экрана
         if self.horisontal_move_locked:  # and not self.kill_action.next_frame():

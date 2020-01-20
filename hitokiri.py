@@ -61,31 +61,45 @@ class WeapontSprite(pygame.sprite.Sprite):
         # координаты спрайта удара
 
 
+class Hart(pygame.sprite.Sprite):
+    # создаю картинку жизней, потом ее рисую
+    def __init__(self, screen, hitokiri):
+        self.hitokiri = hitokiri
+        self.screen = screen
+        # как не передава
+        super().__init__()
+        self.image = pygame.image.load('data/img/hart1.png')
+        self.rect = self.image.get_rect()
+
+    def write(self, x, y):
+        for i in range(0, self.hitokiri.life):
+            self.screen.blit(self.image, (x * i * 2, y))
+            # в цикле рисую сердечки hart1, hart слишком большие
+
+
 class Hitokiri(BaseUnit):
     zomby_kill = 0  # счетчик зомби
-    life_kill = 0   # счетчик потерянных жизней
+    life = 5  # счетчик жизней
 
     def create_actions(self):
         self.sleep_action = HitokiriSleep(self)
         self.move_action = HitokiriMove(self)
         self.sword_action = HitokiriSword(self)
-        self.start_action = self.sleep_action   # начальное действие
-        self.sword = None   # спрайт меча
+        self.start_action = self.sleep_action  # начальное действие
+        self.sword = None  # спрайт меча
 
     def update(self):
         if self.rect.x > WIDTH - 100 and self.direction == 1 or self.rect.x < 100 and self.direction == -1:
-            self.horisontal_move = False    # хитокири не может уйти за границы дисплея
+            self.horisontal_move = False  # хитокири не может уйти за границы дисплея
         if self.action_move:
             if not self.sword:
                 self.sword = WeapontSprite(self.weapont_sprites, self)
-                # print(self.sword)
             if not self.sword_action.next_frame():
                 self.action_move = False
                 self.horisontal_move_locked = False
                 self.vertical_move_locked = False
                 self.sword.kill()
                 self.sword = None
-                # print(self.sword)
         elif self.horisontal_move:
             self.move_action.next_frame()
         else:

@@ -13,11 +13,11 @@ class Spritesheet(object):
     # класс для деления картинки на спрайты
     def __init__(self, filename):
         self.sheet = pygame.image.load(filename).convert()
-
+        # загрузка общей картинки спрайтов
 
     # Load a specific image from a specific rectangle
     def image_at(self, rectangle, colorkey=None):
-        "Loads image from x,y,x+offset,y+offset"
+        "создаём прямоугольник"
         rect = pygame.Rect(rectangle)
         image = pygame.Surface(rect.size).convert()
         image.blit(self.sheet, (0, 0), rect)
@@ -27,7 +27,7 @@ class Spritesheet(object):
             image.set_colorkey(colorkey, pygame.RLEACCEL)
         return image
 
-    # Load a whole bunch of images and return them as a list
+    # получение нескольких картинок
     def images_at(self, rects, colorkey=None):
         "Loads multiple images, supply a list of coordinates"
         return [self.image_at(rect, colorkey) for rect in rects]
